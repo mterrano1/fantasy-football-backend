@@ -12,7 +12,7 @@ end
 use Rack::JSONBodyParser
 
 # Our application
-use PositionController
-use PlayerController
-use FantasyTeamController
+use PositionsController
+use PlayersController
+use FantasyTeamsController
 run ApplicationController
