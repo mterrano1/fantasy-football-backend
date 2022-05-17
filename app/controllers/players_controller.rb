@@ -1,41 +1,37 @@
 class PlayersController < ApplicationController
-    set :default_content_type, 'application/json'
 
     get '/players' do
-        players = Player.all 
-        players.to_json
-      end
+        players = Player.all
+        players.to_json(include: :position)
+    end
 
     get '/players/:id' do
         player = Player.find_by(id: params[:id])
-        player.to_json
+        player.to_json(include: :position)
     end
 
-    post '/players/new' do
+    post '/players' do
         player = Player.create(
             name: params[:name],
             team: params[:team],
             img: params[:img],
-            starting: params[:starting],
-            points: null
-            position_id: params[:position_id],
-            fantasy_team_id: params[:fantasy_team_id]
+            position_id: params[:position_id]
         )
-        player.to_json(include: :fantasy_team)
+        player.to_json(include: :position)
     end
 
     patch '/players/:id' do
         player = Player.find_by(id: params[:id])
         player.update(
-            starting: params[:starting]
+            fantasy_team_id: params[:fantasy_team_id]
         )
-        player.to_json(include: :fantasy_team)
+        player.to_json(include: :fantasy_team, include: :position)
     end
 
     delete '/players/:id' do
         player = Player.find_by(id: params[:id])
         player.destroy
-        player.to_json(include: :fantasy_team)
+        player.to_json
     end
 
   end
