@@ -25,7 +25,7 @@ class PlayersController < ApplicationController
         player.update(
             fantasy_team_id: params[:fantasy_team_id]
         )
-        player.to_json(include: :fantasy_team, include: :position)
+        player.to_json(include: :position)
     end
 
     delete '/players/:id' do
@@ -34,4 +34,4 @@ class PlayersController < ApplicationController
         player.to_json
     end
 
-  end
+end
